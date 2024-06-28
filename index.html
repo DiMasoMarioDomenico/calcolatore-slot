@@ -98,14 +98,13 @@
                 return;
             }
 
-            // Esempio di calcolo, da sostituire con i calcoli effettivi
             const conservRisk = riskCoefficient;
-            const normalRisk = riskCoefficient * 1.5;
-            const aggressiveRisk = riskCoefficient * 2;
+            const normalRisk = conservRisk * 1.5;
+            const aggressiveRisk = conservRisk * 2;
 
-            const conservBonusTarget = (initialBonus * wagering) * conservRisk;
-            const normalBonusTarget = (initialBonus * wagering) * normalRisk;
-            const aggressiveBonusTarget = (initialBonus * wagering) * aggressiveRisk;
+            const conservBonusTarget = initialBonus * wagering * conservRisk;
+            const normalBonusTarget = initialBonus * wagering * normalRisk;
+            const aggressiveBonusTarget = initialBonus * wagering * aggressiveRisk;
 
             const spinIncrementConserv = (remainingBonus * rollPercentage) / conservRisk;
             const spinIncrementNormal = (remainingBonus * rollPercentage) / normalRisk;
@@ -121,9 +120,9 @@
                     </tr>
                     <tr>
                         <td>Coefficiente di rischio</td>
-                        <td>${conservRisk.toFixed(2)}</td>
-                        <td>${normalRisk.toFixed(2)}</td>
-                        <td>${aggressiveRisk.toFixed(2)}</td>
+                        <td>2.40</td>
+                        <td>3.60</td>
+                        <td>4.80</td>
                     </tr>
                     <tr>
                         <td>Bonus target consigliato</td>
