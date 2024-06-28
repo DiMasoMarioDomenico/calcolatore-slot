@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Calcolatore Fun Bonus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: #f0f0f0;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+        .container h1 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        .container input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            height: 40px;
+            box-sizing: border-box;
+        }
+        .container button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #0056b3;
+        }
+        .container .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+    <script>
+        function calculate() {
+            const initialBonus = parseFloat(document.getElementById('initialBonus').value);
+            const wagering = parseFloat(document.getElementById('wagering').value);
+            const rtp = parseFloat(document.getElementById('rtp').value);
+            const capBonus = parseFloat(document.getElementById('capBonus').value);
+
+            if (isNaN(initialBonus) || isNaN(wagering) || isNaN(rtp) || isNaN(capBonus)) {
+                document.getElementById('result').innerText = 'Inserisci tutti i valori';
+                return;
+            }
+
+            const result = initialBonus * wagering * rtp * capBonus; // Esempio di calcolo
+            document.getElementById('result').innerText = `Risultato: ${result.toFixed(2)}`;
+        }
+
+        function reset() {
+            document.getElementById('initialBonus').value = '';
+            document.getElementById('wagering').value = '';
+            document.getElementById('rtp').value = '';
+            document.getElementById('capBonus').value = '';
+            document.getElementById('result').innerText = '';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Calcolatore Fun Bonus</h1>
+        <label for="initialBonus">Bonus iniziale:</label>
+        <input type="number" id="initialBonus" min="0" step="0.01">
+        <label for="wagering">Wagering:</label>
+        <input type="number" id="wagering" min="0" step="0.01">
+        <label for="rtp">RTP slot per rollover:</label>
+        <input type="number" id="rtp" min="0" max="1" step="0.01">
+        <label for="capBonus">Cap Bonus:</label>
+        <input type="number" id="capBonus" min="0" step="0.01">
+        <button onclick="calculate()">Calcola</button>
+        <button onclick="reset()">Resetta</button>
+        <div class="result" id="result"></div>
+    </div>
+</body>
+</html>
