@@ -98,17 +98,20 @@
                 return;
             }
 
-            const conservRisk = riskCoefficient;
-            const normalRisk = conservRisk * 1.5;
-            const aggressiveRisk = conservRisk * 2;
+            // Coefficienti di rischio fissi
+            const conservRisk = 2.4;
+            const normalRisk = 3.6;
+            const aggressiveRisk = 4.8;
 
-            const conservBonusTarget = initialBonus * wagering * conservRisk;
-            const normalBonusTarget = initialBonus * wagering * normalRisk;
-            const aggressiveBonusTarget = initialBonus * wagering * aggressiveRisk;
+            // Calcoli per il bonus target consigliato
+            const conservBonusTarget = initialBonus * conservRisk;
+            const normalBonusTarget = initialBonus * normalRisk;
+            const aggressiveBonusTarget = initialBonus * aggressiveRisk;
 
-            const spinIncrementConserv = (remainingBonus * rollPercentage) / conservRisk;
-            const spinIncrementNormal = (remainingBonus * rollPercentage) / normalRisk;
-            const spinIncrementAggressive = (remainingBonus * rollPercentage) / aggressiveRisk;
+            // Calcoli per l'importo dello spin per incrementare
+            const spinIncrementConserv = (remainingBonus * (1 - rollPercentage)) / conservRisk;
+            const spinIncrementNormal = (remainingBonus * (1 - rollPercentage)) / normalRisk;
+            const spinIncrementAggressive = (remainingBonus * (1 - rollPercentage)) / aggressiveRisk;
 
             document.getElementById('result').innerHTML = `
                 <table>
@@ -120,9 +123,9 @@
                     </tr>
                     <tr>
                         <td>Coefficiente di rischio</td>
-                        <td>2.40</td>
-                        <td>3.60</td>
-                        <td>4.80</td>
+                        <td>${conservRisk.toFixed(2)}</td>
+                        <td>${normalRisk.toFixed(2)}</td>
+                        <td>${aggressiveRisk.toFixed(2)}</td>
                     </tr>
                     <tr>
                         <td>Bonus target consigliato</td>
