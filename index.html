@@ -109,9 +109,9 @@
             const aggressiveBonusTarget = initialBonus * aggressiveRisk;
 
             // Calcolo dell'importo dello spin per incrementare
-            const spinIncrementConserv = Math.floor((((capBonus + initialBonus) / 2 - initialBonus + conservRisk * initialBonus - remainingBonus) / 100) + (initialBonus * wagering * (1 - rollPercentage) / 20000));
-            const spinIncrementNormal = Math.floor((((capBonus + initialBonus) / 2 - initialBonus + normalRisk * initialBonus - remainingBonus) / 200) + (initialBonus * wagering * (1 - rollPercentage) / 40000));
-            const spinIncrementAggressive = Math.floor((((capBonus + initialBonus) / 2 - initialBonus + aggressiveRisk * initialBonus - remainingBonus) / 500) + (initialBonus * wagering * (1 - rollPercentage) / 100000));
+            const spinIncrementConserv = (((capBonus + initialBonus) / 2 - initialBonus + conservRisk * initialBonus - remainingBonus) / 100) + (initialBonus * wagering * (1 - rollPercentage) / 20000);
+            const spinIncrementNormal = (((capBonus + initialBonus) / 2 - initialBonus + normalRisk * initialBonus - remainingBonus) / 200) + (initialBonus * wagering * (1 - rollPercentage) / 40000);
+            const spinIncrementAggressive = (((capBonus + initialBonus) / 2 - initialBonus + aggressiveRisk * initialBonus - remainingBonus) / 500) + (initialBonus * wagering * (1 - rollPercentage) / 100000);
 
             document.getElementById('result').innerHTML = `
                 <table>
