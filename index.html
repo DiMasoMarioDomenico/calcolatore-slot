@@ -91,26 +91,27 @@
             const capBonus = parseFloat(document.getElementById('capBonus').value);
             const remainingBonus = parseFloat(document.getElementById('remainingBonus').value);
             const rollPercentage = parseFloat(document.getElementById('rollPercentage').value) / 100;
+            const riskCoefficientChosen = parseFloat(document.getElementById('riskCoefficient').value);
 
-            if (isNaN(initialBonus) || isNaN(wagering) || isNaN(rtp) || isNaN(capBonus) || isNaN(remainingBonus) || isNaN(rollPercentage)) {
+            if (isNaN(initialBonus) || isNaN(wagering) || isNaN(rtp) || isNaN(capBonus) || isNaN(remainingBonus) || isNaN(rollPercentage) || isNaN(riskCoefficientChosen)) {
                 document.getElementById('result').innerText = 'Inserisci tutti i valori';
                 return;
             }
 
-            // Coefficienti di rischio calcolati
+            // Calcolo dei coefficienti di rischio
             const conservRisk = (1 + (1 - rtp + 0.04) * wagering) - (1 - rtp + 0.04) * wagering * rollPercentage;
             const normalRisk = (1 + (1 - rtp + 0.03) * wagering) - (1 - rtp + 0.03) * wagering * rollPercentage;
             const aggressiveRisk = (1 + (1 - rtp + 0.02) * wagering) - (1 - rtp + 0.02) * wagering * rollPercentage;
 
-            // Calcoli per il bonus target consigliato
+            // Calcolo del bonus target consigliato
             const conservBonusTarget = initialBonus * conservRisk;
             const normalBonusTarget = initialBonus * normalRisk;
             const aggressiveBonusTarget = initialBonus * aggressiveRisk;
 
-            // Calcoli per l'importo dello spin per incrementare
-            const spinIncrementConserv = (remainingBonus * (1 - rollPercentage)) / conservRisk;
-            const spinIncrementNormal = (remainingBonus * (1 - rollPercentage)) / normalRisk;
-            const spinIncrementAggressive = (remainingBonus * (1 - rollPercentage)) / aggressiveRisk;
+            // Calcolo dell'importo dello spin per incrementare
+            const spinIncrementConserv = (capBonus * (1 - rollPercentage)) / conservRisk;
+            const spinIncrementNormal = (capBonus * (1 - rollPercentage)) / normalRisk;
+            const spinIncrementAggressive = (capBonus * (1 - rollPercentage)) / aggressiveRisk;
 
             document.getElementById('result').innerHTML = `
                 <table>
@@ -122,9 +123,9 @@
                     </tr>
                     <tr>
                         <td>Coefficiente di rischio</td>
-                        <td>${conservRisk.toFixed(2)}</td>
-                        <td>${normalRisk.toFixed(2)}</td>
-                        <td>${aggressiveRisk.toFixed(2)}</td>
+                        <td>${(conservRisk * 100).toFixed(2)}%</td>
+                        <td>${(normalRisk * 100).toFixed(2)}%</td>
+                        <td>${(aggressiveRisk * 100).toFixed(2)}%</td>
                     </tr>
                     <tr>
                         <td>Bonus target consigliato</td>
@@ -155,6 +156,7 @@
             document.getElementById('capBonus').value = '';
             document.getElementById('remainingBonus').value = '';
             document.getElementById('rollPercentage').value = '';
+            document.getElementById('riskCoefficient').value = '';
             document.getElementById('result').innerText = '';
         }
     </script>
@@ -174,6 +176,8 @@
         <input type="number" id="remainingBonus" min="0" step="0.01">
         <label for="rollPercentage">% Roll completata (%):</label>
         <input type="number" id="rollPercentage" min="0" max="100" step="0.01">
+        <label for="riskCoefficient">Coefficiente di rischio scelto:</label>
+        <input type="number" id="riskCoefficient" min="0" step="0.01">
         <button onclick="calculate()">Calcola</button>
         <button onclick="reset()">Resetta</button>
         <div class="result" id="result"></div>
