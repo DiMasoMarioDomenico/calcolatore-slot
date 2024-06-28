@@ -98,89 +98,11 @@
                 return;
             }
 
-            // Calcolo dei coefficienti di rischio
+            // Coefficienti di rischio calcolati
             const conservRisk = (1 + (1 - rtp + 0.04) * wagering) - (1 - rtp + 0.04) * wagering * rollPercentage;
             const normalRisk = (1 + (1 - rtp + 0.03) * wagering) - (1 - rtp + 0.03) * wagering * rollPercentage;
             const aggressiveRisk = (1 + (1 - rtp + 0.02) * wagering) - (1 - rtp + 0.02) * wagering * rollPercentage;
 
             // Calcolo del bonus target consigliato
             const conservBonusTarget = initialBonus * conservRisk;
-            const normalBonusTarget = initialBonus * normalRisk;
-            const aggressiveBonusTarget = initialBonus * aggressiveRisk;
-
-            // Calcolo dell'importo dello spin per incrementare
-            const spinIncrementConserv = (((capBonus + initialBonus) / 2 - initialBonus + conservRisk * initialBonus - remainingBonus) / 100) + (initialBonus * wagering * (1 - rollPercentage) / 20000);
-            const spinIncrementNormal = (((capBonus + initialBonus) / 2 - initialBonus + normalRisk * initialBonus - remainingBonus) / 200) + (initialBonus * wagering * (1 - rollPercentage) / 40000);
-            const spinIncrementAggressive = (((capBonus + initialBonus) / 2 - initialBonus + aggressiveRisk * initialBonus - remainingBonus) / 500) + (initialBonus * wagering * (1 - rollPercentage) / 100000);
-
-            document.getElementById('result').innerHTML = `
-                <table>
-                    <tr>
-                        <th>Strategia</th>
-                        <th>CONSERVATIVA</th>
-                        <th>NORMALE</th>
-                        <th>AGGRESSIVA</th>
-                    </tr>
-                    <tr>
-                        <td>Coefficiente di rischio</td>
-                        <td>${(conservRisk * 100).toFixed(2)}%</td>
-                        <td>${(normalRisk * 100).toFixed(2)}%</td>
-                        <td>${(aggressiveRisk * 100).toFixed(2)}%</td>
-                    </tr>
-                    <tr>
-                        <td>Bonus target consigliato</td>
-                        <td>€ ${conservBonusTarget.toFixed(2)}</td>
-                        <td>€ ${normalBonusTarget.toFixed(2)}</td>
-                        <td>€ ${aggressiveBonusTarget.toFixed(2)}</td>
-                    </tr>
-                    <tr>
-                        <td>Volatilità Slot</td>
-                        <td>BASSA</td>
-                        <td>MEDIA</td>
-                        <td>ALTA</td>
-                    </tr>
-                    <tr>
-                        <td>Importo Spin x incrementare</td>
-                        <td>€ ${spinIncrementConserv.toFixed(1)}</td>
-                        <td>€ ${spinIncrementNormal.toFixed(1)}</td>
-                        <td>€ ${spinIncrementAggressive.toFixed(1)}</td>
-                    </tr>
-                </table>
-            `;
-        }
-
-        function reset() {
-            document.getElementById('initialBonus').value = '';
-            document.getElementById('wagering').value = '';
-            document.getElementById('rtp').value = '';
-            document.getElementById('capBonus').value = '';
-            document.getElementById('remainingBonus').value = '';
-            document.getElementById('rollPercentage').value = '';
-            document.getElementById('riskCoefficient').value = '';
-            document.getElementById('result').innerText = '';
-        }
-    </script>
-</head>
-<body>
-    <div class="container">
-        <h1>Calcolatore Fun Bonus</h1>
-        <label for="initialBonus">Bonus iniziale (€):</label>
-        <input type="number" id="initialBonus" min="0" step="0.01">
-        <label for="wagering">Wagering:</label>
-        <input type="number" id="wagering" min="0" step="0.01">
-        <label for="rtp">RTP slot per rollover (%):</label>
-        <input type="number" id="rtp" min="0" max="100" step="0.01">
-        <label for="capBonus">Cap Bonus (€):</label>
-        <input type="number" id="capBonus" min="0" step="0.01">
-        <label for="remainingBonus">Bonus restante (€):</label>
-        <input type="number" id="remainingBonus" min="0" step="0.01">
-        <label for="rollPercentage">% Roll completata (%):</label>
-        <input type="number" id="rollPercentage" min="0" max="100" step="0.01">
-        <label for="riskCoefficient">Coefficiente di rischio scelto:</label>
-        <input type="number" id="riskCoefficient" min="0" step="0.01">
-        <button onclick="calculate()">Calcola</button>
-        <button onclick="reset()">Resetta</button>
-        <div class="result" id="result"></div>
-    </div>
-</body>
-</html>
+            const normalBon
