@@ -91,17 +91,16 @@
             const capBonus = parseFloat(document.getElementById('capBonus').value);
             const remainingBonus = parseFloat(document.getElementById('remainingBonus').value);
             const rollPercentage = parseFloat(document.getElementById('rollPercentage').value) / 100;
-            const riskCoefficient = parseFloat(document.getElementById('riskCoefficient').value);
 
-            if (isNaN(initialBonus) || isNaN(wagering) || isNaN(rtp) || isNaN(capBonus) || isNaN(remainingBonus) || isNaN(rollPercentage) || isNaN(riskCoefficient)) {
+            if (isNaN(initialBonus) || isNaN(wagering) || isNaN(rtp) || isNaN(capBonus) || isNaN(remainingBonus) || isNaN(rollPercentage)) {
                 document.getElementById('result').innerText = 'Inserisci tutti i valori';
                 return;
             }
 
-            // Coefficienti di rischio fissi
-            const conservRisk = 2.4;
-            const normalRisk = 3.6;
-            const aggressiveRisk = 4.8;
+            // Coefficienti di rischio calcolati
+            const conservRisk = (1 + (1 - rtp + 0.04) * wagering) - (1 - rtp + 0.04) * wagering * rollPercentage;
+            const normalRisk = (1 + (1 - rtp + 0.03) * wagering) - (1 - rtp + 0.03) * wagering * rollPercentage;
+            const aggressiveRisk = (1 + (1 - rtp + 0.02) * wagering) - (1 - rtp + 0.02) * wagering * rollPercentage;
 
             // Calcoli per il bonus target consigliato
             const conservBonusTarget = initialBonus * conservRisk;
@@ -156,7 +155,6 @@
             document.getElementById('capBonus').value = '';
             document.getElementById('remainingBonus').value = '';
             document.getElementById('rollPercentage').value = '';
-            document.getElementById('riskCoefficient').value = '';
             document.getElementById('result').innerText = '';
         }
     </script>
@@ -176,8 +174,6 @@
         <input type="number" id="remainingBonus" min="0" step="0.01">
         <label for="rollPercentage">% Roll completata (%):</label>
         <input type="number" id="rollPercentage" min="0" max="100" step="0.01">
-        <label for="riskCoefficient">Coefficiente di rischio scelto:</label>
-        <input type="number" id="riskCoefficient" min="0" step="0.01">
         <button onclick="calculate()">Calcola</button>
         <button onclick="reset()">Resetta</button>
         <div class="result" id="result"></div>
