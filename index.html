@@ -68,14 +68,26 @@
             const wagering = parseFloat(document.getElementById('wagering').value);
             const rtp = parseFloat(document.getElementById('rtp').value);
             const capBonus = parseFloat(document.getElementById('capBonus').value);
+            const remainingBonus = parseFloat(document.getElementById('remainingBonus').value);
+            const rollPercentage = parseFloat(document.getElementById('rollPercentage').value);
 
-            if (isNaN(initialBonus) || isNaN(wagering) || isNaN(rtp) || isNaN(capBonus)) {
+            if (isNaN(initialBonus) || isNaN(wagering) || isNaN(rtp) || isNaN(capBonus) || isNaN(remainingBonus) || isNaN(rollPercentage)) {
                 document.getElementById('result').innerText = 'Inserisci tutti i valori';
                 return;
             }
 
-            const result = initialBonus * wagering * rtp * capBonus; // Esempio di calcolo
-            document.getElementById('result').innerText = `Risultato: ${result.toFixed(2)}`;
+            // Esempio di calcolo, da sostituire con i calcoli effettivi
+            const riskCoefficient = initialBonus * wagering;
+            const bonusTarget = capBonus * rtp;
+            const volatility = (rtp > 0.95) ? 'Alta' : 'Bassa';
+            const spinIncrement = remainingBonus * rollPercentage;
+
+            document.getElementById('result').innerHTML = `
+                Coefficiente di rischio: ${riskCoefficient.toFixed(2)}<br>
+                Bonus target consigliato: ${bonusTarget.toFixed(2)}<br>
+                Volatilità Slot: ${volatility}<br>
+                Importo Spin x incrementare: ${spinIncrement.toFixed(2)}
+            `;
         }
 
         function reset() {
@@ -83,6 +95,8 @@
             document.getElementById('wagering').value = '';
             document.getElementById('rtp').value = '';
             document.getElementById('capBonus').value = '';
+            document.getElementById('remainingBonus').value = '';
+            document.getElementById('rollPercentage').value = '';
             document.getElementById('result').innerText = '';
         }
     </script>
@@ -98,6 +112,10 @@
         <input type="number" id="rtp" min="0" max="1" step="0.01">
         <label for="capBonus">Cap Bonus:</label>
         <input type="number" id="capBonus" min="0" step="0.01">
+        <label for="remainingBonus">Bonus restante:</label>
+        <input type="number" id="remainingBonus" min="0" step="0.01">
+        <label for="rollPercentage">% Roll completata:</label>
+        <input type="number" id="rollPercentage" min="0" max="100" step="0.01">
         <button onclick="calculate()">Calcola</button>
         <button onclick="reset()">Resetta</button>
         <div class="result" id="result"></div>
